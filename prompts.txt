@@ -1,0 +1,33 @@
+"Necito hacer un trabajo, te paso lo que hay que hacer y dime si puedes hacerlo y como lo harias."
+"Explicame primero qué es cada tecnología"
+"Estoy usando linux mint"
+"Lo instalo asi?" (imagen de la página de Node.js con Docker)
+"Listo ya lo hice" (instalación de Node.js)
+"El primero me dio v24.14.1 y el segundo 11.11.0"
+"Ya hize todo hasta el Paso 3 incluido, dime que sige y de paso dime que hace esto ultimo"
+"Mientras se instala dime todo lo que hice hasta ahora de forma que lo pueda entender y explicarlo"
+"Ya se me termino de descargar, que hago?"
+"Yo por ahora solo quiero dejar todo instalado y listo para comenzar a codear luego"
+"Al poner npx prisma migrate dev --name init me tira esto..."
+"En prisma.config.ts me dice que hay error en node:path..."
+"Sigue apareciendo esto, debe estar en otra parte el error"
+"Le doy a kill terminal?"
+"Ahora me aparece esto..." (nvm install 20)
+"Estas cosas que me estas diciendo ahora no se pueden hacer desde el programa?"
+"Listo" (después de crear el proyecto NestJS)
+"Listo" (después de editar los archivos)
+"Me aparece esto: npm error Missing script start:dev"
+"No me aparece nada, solo me toma el comando" (npm run)
+"Esta bien esto?" (npm install prisma)
+"Solo para saber, puedo eliminar esas vulnerabilidades?"
+"Una cosa, el fondo es negro y el texto no se ve bien"
+"Sigue igual" (dos veces)
+"Listo! ahora se ve en blanco"
+"A priori no paso nada, unicamente salio abajo a la izquierda 1 Issue"
+"Esto es todo lo que aparece ahi" (error de CORS)
+"Me aparece abajo el contacto que agrege y al lado pone eliminar"
+"Le doy a eliminar y pareceria que se elimina"
+"Cuando le doy a recargar no se elimina"
+"Me gustaria probar cerrar las terminales para apagar el servidor"
+"Efectivamente no se borran"
+"Me gustaria hacer un archivo README explicando como inicializar el proyecto"
