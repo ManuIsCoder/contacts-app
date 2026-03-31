@@ -13,6 +13,10 @@ export class ContactsService {
     return this.prisma.contact.create({ data });
   }
 
+  async update(id: number, data: { name?: string; email?: string }) {
+    return this.prisma.contact.update({ where: { id }, data });
+  }
+
   async remove(id: number) {
     return this.prisma.contact.delete({ where: { id } });
   }

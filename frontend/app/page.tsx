@@ -12,6 +12,9 @@ export default function Home() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editEmail, setEditEmail] = useState('');
 
   const fetchContacts = async () => {
     const res = await fetch('http://localhost:3000/contacts');
@@ -39,6 +42,28 @@ export default function Home() {
     await fetch(`http://localhost:3000/contacts/${id}`, {
       method: 'DELETE',
     });
+    fetchContacts();
+  };
+
+  const startEditing = (contact: Contact) => {
+    setEditingId(contact.id);
+    setEditName(contact.name);
+    setEditEmail(contact.email);
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditName('');
+    setEditEmail('');
+  };
+
+  const saveEdit = async (id: number) => {
+    await fetch(`http://localhost:3000/contacts/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: editName, email: editEmail }),
+    });
+    setEditingId(null);
     fetchContacts();
   };
 
@@ -71,18 +96,57 @@ export default function Home() {
         {contacts.map((contact) => (
           <li
             key={contact.id}
-            className="flex justify-between items-center border p-3 rounded"
+            className="border p-3 rounded"
           >
-            <div>
-              <p className="font-semibold">{contact.name}</p>
-              <p className="text-sm text-gray-500">{contact.email}</p>
-            </div>
-            <button
-              className="text-red-500 hover:text-red-700"
-              onClick={() => deleteContact(contact.id)}
-            >
-              Eliminar
-            </button>
+            {editingId === contact.id ? (
+              <div className="flex flex-col gap-2">
+                <input
+                  className="border p-2 rounded text-black"
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                />
+                <input
+                  className="border p-2 rounded text-black"
+                  value={editEmail}
+                  onChange={(e) => setEditEmail(e.target.value)}
+                />
+                <div className="flex gap-2">
+                  <button
+                    className="bg-green-600 text-white p-2 rounded hover:bg-green-700 flex-1"
+                    onClick={() => saveEdit(contact.id)}
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    className="bg-gray-400 text-white p-2 rounded hover:bg-gray-500 flex-1"
+                    onClick={cancelEditing}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-between items-center">
+                <div>
+                  <p className="font-semibold">{contact.name}</p>
+                  <p className="text-sm text-gray-500">{contact.email}</p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    className="text-blue-500 hover:text-blue-700"
+                    onClick={() => startEditing(contact)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => deleteContact(contact.id)}
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            )}
           </li>
         ))}
       </ul>
