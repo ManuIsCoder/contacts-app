@@ -15,6 +15,8 @@ export default function Home() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState('');
   const [editEmail, setEditEmail] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const [editErrors, setEditErrors] = useState<{ name?: string; email?: string }>({});
 
   const fetchContacts = async () => {
     const res = await fetch('http://localhost:3000/contacts');
@@ -26,8 +28,22 @@ export default function Home() {
     fetchContacts();
   }, []);
 
+  const validateFields = (n: string, e: string) => {
+    const newErrors: { name?: string; email?: string } = {};
+    if (!n.trim()) newErrors.name = 'El nombre es obligatorio';
+    else if (n.trim().length < 2) newErrors.name = 'El nombre debe tener al menos 2 caracteres';
+    if (!e.trim()) newErrors.email = 'El email es obligatorio';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) newErrors.email = 'El email no es válido';
+    return newErrors;
+  };
+
   const createContact = async () => {
-    if (!name || !email) return;
+    const newErrors = validateFields(name, email);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
     await fetch('http://localhost:3000/contacts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -49,15 +65,23 @@ export default function Home() {
     setEditingId(contact.id);
     setEditName(contact.name);
     setEditEmail(contact.email);
+    setEditErrors({});
   };
 
   const cancelEditing = () => {
     setEditingId(null);
     setEditName('');
     setEditEmail('');
+    setEditErrors({});
   };
 
   const saveEdit = async (id: number) => {
+    const newErrors = validateFields(editName, editEmail);
+    if (Object.keys(newErrors).length > 0) {
+      setEditErrors(newErrors);
+      return;
+    }
+    setEditErrors({});
     await fetch(`http://localhost:3000/contacts/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -72,18 +96,24 @@ export default function Home() {
       <h1 className="text-3xl font-bold mb-6">Contactos</h1>
 
       <div className="flex flex-col gap-3 mb-8">
-        <input
-          className="border p-2 rounded text-black"
-          placeholder="Nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          className="border p-2 rounded text-black"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div>
+          <input
+            className="border p-2 rounded text-black w-full"
+            placeholder="Nombre"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+        </div>
+        <div>
+          <input
+            className="border p-2 rounded text-black w-full"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+        </div>
         <button
           className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
           onClick={createContact}
@@ -94,22 +124,25 @@ export default function Home() {
 
       <ul className="flex flex-col gap-3">
         {contacts.map((contact) => (
-          <li
-            key={contact.id}
-            className="border p-3 rounded"
-          >
+          <li key={contact.id} className="border p-3 rounded">
             {editingId === contact.id ? (
               <div className="flex flex-col gap-2">
-                <input
-                  className="border p-2 rounded text-black"
-                  value={editName}
-                  onChange={(e) => setEditName(e.target.value)}
-                />
-                <input
-                  className="border p-2 rounded text-black"
-                  value={editEmail}
-                  onChange={(e) => setEditEmail(e.target.value)}
-                />
+                <div>
+                  <input
+                    className="border p-2 rounded text-black w-full"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                  />
+                  {editErrors.name && <p className="text-red-500 text-sm mt-1">{editErrors.name}</p>}
+                </div>
+                <div>
+                  <input
+                    className="border p-2 rounded text-black w-full"
+                    value={editEmail}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                  />
+                  {editErrors.email && <p className="text-red-500 text-sm mt-1">{editErrors.email}</p>}
+                </div>
                 <div className="flex gap-2">
                   <button
                     className="bg-green-600 text-white p-2 rounded hover:bg-green-700 flex-1"
