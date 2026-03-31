@@ -1,6 +1,6 @@
 # Contacts App
 
-Aplicación web para gestionar contactos (crear, listar y eliminar).
+Aplicación web para gestionar contactos (crear, listar, editar, buscar y eliminar).
 
 ## Requisitos previos
 
@@ -11,7 +11,7 @@ Aplicación web para gestionar contactos (crear, listar y eliminar).
 
 ### 1. Clonar el repositorio
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/ManuIsCoder/contacts-app.git
 cd contacts-app
 ```
 
@@ -49,3 +49,12 @@ npm run dev
 ### 5. Abrir la app
 
 Entrá a [http://localhost:3001](http://localhost:3001)
+
+## Funcionalidades
+
+- Crear un contacto (nombre + email)
+- Listar todos los contactos
+- Editar un contacto
+- Buscar contactos por nombre o email
+- Eliminar un contacto
+- Validaciones en formularios

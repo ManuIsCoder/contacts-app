@@ -31,3 +31,8 @@
 "Me gustaria probar cerrar las terminales para apagar el servidor"
 "Efectivamente no se borran"
 "Me gustaria hacer un archivo README explicando como inicializar el proyecto"
+"Hagamos primero el editor, luego el de validacion y finalmente el buscador"
+"Listo, dime lo que hay que hacer ahora hasta incluirlo en el github"
+"SI FUNCIONA" (confirmando las validaciones)
+"Ya lo subí, Quiero que en el siguiente mensaje incluyas como hacer el buscador y la interfaz prolija/buena UX. De ahora en mas no me digas la parte de subir a github."
+"En el siguiente mensaje responde las siguietes pregruntas por separado. Que se necesita para hacer el deploy online accesible y como hacemos para reducir el tamaño (porque en total pesa como 800 MB ¿Es normal que pese tanto?)"
